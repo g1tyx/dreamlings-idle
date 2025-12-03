@@ -1,0 +1,400 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #1e1e1e;
+  color: #f5f2e8;
+  display: flex;
+}
+
+#sidebar {
+  width: 220px;
+  background-color: #2a2a2a;
+  color: #f5f2e8;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding: 1rem;
+  overflow-y: auto; /* Allow scrolling if content is tall */
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+
+#sidebar h1 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #fff6d1;
+}
+
+#sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+#sidebar li {
+  padding: 0.5rem 0;
+  cursor: pointer;
+  color: #ccc;
+  transition: color 0.2s;
+}
+
+#sidebar li:hover, #sidebar li.active {
+  color: #fff6d1;
+}
+
+#main {
+  margin-left: 240px;
+  padding: 1.5rem;
+  width: calc(100% - 240px);
+}
+
+.dreamling-section {
+  margin-bottom: 2rem;
+  border: 1px solid #3a3a3a;
+  border-radius: 8px;
+  padding: 1rem;
+  background: #2a2a2a;
+}
+
+.dreamling-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.dreamling {
+  background: #333;
+  border-radius: 6px;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-left: 4px solid transparent;
+  transition: transform 0.1s;
+}
+
+.dreamling:hover {
+  transform: scale(1.05);
+}
+
+/* Buttons */
+button.move-btn,
+#search-btn {
+  background-color: #444;  /* dark charcoal */
+  color: #f5f5dc;          /* cream text */
+  border: 1px solid #888;
+  padding: 5px 10px;
+  margin-right: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background 0.2s;
+}
+
+button.move-btn:hover,
+#search-btn:hover {
+  background-color: #666;  /* lighter charcoal on hover */
+}
+
+button.release-btn {
+  background-color: #880000;  /* dark red for release */
+  color: #f5f5dc;
+  border: 1px solid #aa0000;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background 0.2s;
+}
+
+button.release-btn:hover {
+  background-color: #aa0000;
+}
+
+.release-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* Rarity colors */
+.common { border-left-color: grey; }
+.uncommon { border-left-color: #66bb66; }
+.rare { border-left-color: #6495ed; }
+.epic { border-left-color: #cba2f7; }
+.legendary { border-left-color: #ffd700; }
+
+/* Wild Area Buttons */
+button.area-btn {
+  background-color: #444;  /* dark charcoal */
+  color: #f5f5dc;          /* cream text */
+  border: 1px solid #888;
+  padding: 5px 10px;
+  margin: 3px 5px 3px 0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background 0.2s;
+}
+
+button.area-btn:hover {
+  background-color: #666;  /* lighter charcoal on hover */
+}
+
+button.area-btn.active {
+  background: linear-gradient(to right, #4caf50, #8bc34a); /* purple highlight for selected area */
+  color: #fff;
+  border-color: #bbb;
+}
+
+/* Wild Queue Container */
+#wild-queue {
+  display: flex;
+  flex-wrap: wrap;       /* allow items to go to the next line */
+  gap: 10px;             /* space between cards */
+}
+
+/* Individual Wild Dreamling Cards */
+.dreamling-card {
+  flex: 0 0 150px;       /* fixed width for each card */
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  color: #111;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#wild-area-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px; /* space between area buttons */
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+#search-btn {
+  display: block;
+  margin: 10px auto; /* space above and below the search button */
+}
+
+#energy-count {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-top: 15px; /* space above it */
+}
+
+#event-access {
+    background-color: rgba(255, 100, 100, 0.85); /* soft red */
+    color: #fff;
+    font-weight: bold;
+    font-size: 0.9em;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.selected-species {
+  border: 2px solid #00f; /* blue highlight */
+  font-weight: bold;
+}
+
+.fusion-slot.selected {
+  border-color: gold;
+}
+
+.fusion-dreamling {
+  border: 1px solid #ccc;
+  padding: 5px;
+  margin: 3px;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  width: 100px;
+}
+
+.fusion-dreamling.selected {
+  border-color: gold;
+  background-color: rgba(255, 255, 0, 0.3);
+}
+
+#fusion-slots-container {
+  display: flex;
+  justify-content: center; /* centers slots horizontally */
+  gap: 20px; /* space between the two slots */
+  margin-bottom: 20px; /* space below slots before the button */
+}
+
+.fusion-slot {
+  width: 270px;
+  height: 300px;
+  border: 2px dashed #888;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #444;
+}
+
+#fusion-button {
+  display: block;
+  margin: 0 auto; /* center button below slots */
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #444;  /* dark charcoal */
+  color: #f5f5dc;          /* cream text */
+  border: 1px solid #888;
+  border-radius: 4px;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(400px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes fadeOut {
+  to { opacity: 0; transform: translateY(-20px); }
+}
+
+/* Hamburger menu button - hidden on desktop */
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001;
+  background: #2a2a2a;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hamburger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: #fff6d1;
+  transition: 0.3s;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  #sidebar {
+    transform: translateX(-100%); /* Hide off-screen by default */
+  }
+  
+  #sidebar.open {
+    transform: translateX(0); /* Slide in when open */
+  }
+  
+  .hamburger {
+    display: flex; /* Show hamburger on mobile */
+  }
+  
+  /* Adjust main content to not have left margin on mobile */
+  #main-content {
+    margin-left: 0 !important;
+  }
+  
+  /* Optional: Add overlay when menu is open */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  
+  body.menu-open::before {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #main {
+    margin-left: 0;
+    width: 100%;
+    padding: 1rem; /* Optional: reduce padding on mobile for more space */
+    padding-top: 4rem; /* Add top padding so content isn't hidden behind hamburger */
+  }
+
+  #fusion-slots-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.boosts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Increased from 160px to 180px */
+  gap: 12px; /* Slightly larger gap */
+  margin-top: 10px;
+}
+
+.boost-card {
+  background: #3b3b3b;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  padding: 12px; /* Increased padding */
+  color: #f1f1f1;
+  text-align: center;
+  border: 2px solid #555;
+}
+
+.boost-card h4 {
+  margin: 6px 0; /* More margin */
+  font-size: 1.1em; /* Slightly larger font */
+}
+
+.boost-card p {
+  font-size: 0.95em; /* Slightly larger font */
+  margin: 3px 0; /* More margin */
+}
+
+.dreamling-list {
+  max-height: 600px; /* Adjust this value as needed */
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 1px solid #555;
+  border-radius: 8px;
+  padding: 10px;
+  background: #2a2a2a;
+}
+
+/* Custom scrollbar styling for better appearance */
+.dreamling-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dreamling-list::-webkit-scrollbar-track {
+  background: #3a3a3a;
+  border-radius: 4px;
+}
+
+.dreamling-list::-webkit-scrollbar-thumb {
+  background: #8bc34a;
+  border-radius: 4px;
+}
+
+.dreamling-list::-webkit-scrollbar-thumb:hover {
+  background: #689f38;
+}
+
+body.no-scroll {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}

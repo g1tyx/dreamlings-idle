@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dreamlings Idle</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="lz-string.min.js"></script>
+  <script src="qrcode.min.js"></script>
+  <!-- QR Scanner libraries (both for fallback) -->
+  <script src="qr-scanner.umd.min.js"></script>
+  <script src="jsQR.js"></script>
+</head>
+<body>
+<script src="chs.js"></script>
+<script src="core.js"></script>
+    <button id="mobile-menu-toggle" class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+  <div id="sidebar">
+    <h1>Dreamlings Idle</h1>
+    <p>AKA: The Waiting Game</p>
+
+    <!-- In your HTML sidebar -->
+    <div id="player-info" style="margin-bottom:10px; padding:5px; background:#808080; border-radius:6px; text-align:center;">
+    <!-- JS will fill this -->
+    </div>
+
+    <div id="event-access">
+        <div id="event-status"></div>
+        <div id="event-vouchers"></div>
+    </div>
+
+    <ul>
+        <li class="active" data-target="dreamlings">Dreamlings</li>
+        <li data-target="wild-areas">Wild Areas</li>
+        <li data-target="fusion-lab">Fusion Lab</li>
+        <li data-target="dream-book">Dream Book</li>
+        <li data-target="ranch">Upgrades</li>
+        <li data-target="quests">Quests</li>
+        <li data-target="shop">Token Shop</li>
+        <li data-target="collection">Collection</li>
+        <li data-target="trophy-hall">Trophy Hall</li>
+        <li data-target="settings">Settings</li>
+        <li data-target="help">Help</li>
+    </ul>
+        <div id="dream-points">
+            Dream Points: 0
+        </div>
+        <div id="research-points">
+            Research Points: 0
+        </div>
+        <div id="gold">
+            Gold: 0
+        </div>
+    </div>
+
+    <div id="main">
+        <div id="dreamlings" class="tab-section">
+            <h2>Dreamlings</h2>
+            <div class="dreamling-section" id="boosts-section">
+                <h3>Party Boosts</h3>
+                <div id="party-boosts" class="boosts-grid"></div>
+            </div>
+            <div class="dreamling-section" id="party-section">
+            <h3>Party Dreamlings (<span id="party-count">0</span>)</h3>
+            <div class="dreamling-list" id="party-list"></div>
+            </div>
+
+            <div class="dreamling-section" id="training-section">
+            <h3>Training Dreamlings (<span id="training-count">0</span>)</h3>
+            <div class="dreamling-list" id="training-list"></div>
+            </div>
+
+            <div class="dreamling-section" id="storage-section">
+            <h3>Storage Dreamlings (<span id="storage-count">0</span>)</h3>
+            <div class="dreamling-list" id="storage-list"></div>
+
+            <div id="pending-trades" style="margin-top:20px;"></div>
+            </div>
+        </div>
+
+        <div id="wild-areas" class="tab-section" style="display:none;">
+            <h2>Wild Areas</h2>
+            <div id="wild-area-buttons"></div>
+            <div id="energy-display">
+                <div id="energy-count">Energy: 30 / 30</div>
+            </div>
+            <div id="available">Available Dreamlings In This Area</div>
+            <button id="search-btn">Search for Dreamling</button>
+            <div id="wild-queue"></div>
+        </div>
+        
+        <div id="fusion-lab" class="tab-section" style="display:none;">
+            <div id="fusion-container">
+                <h2>Fusion Lab</h2>
+                
+                <div id="fusion-slots-container">
+                    <div class="fusion-slot" id="fusion-slot-1"></div>
+                    <div class="fusion-slot" id="result-slot"></div>
+                    <div class="fusion-slot" id="fusion-slot-2"></div>
+                </div>
+
+                <button id="fusion-button">Fuse Dreamlings</button>
+
+                <h3>Storage (Level 25+ only)</h3>
+                <div id="fusion-storage"></div>
+                </div>
+        </div>
+        
+        <div id="dream-book" class="tab-section" style="display:none;">
+            <h2>Dream Book</h2>
+
+            <!-- Search bar -->
+            <input type="text" id="dreambook-search" placeholder="Search species..." style="width: 100%; padding: 5px; margin-bottom: 10px;">
+
+            <!-- Alphabetical tabs -->
+            <div id="dreambook-letters" style="margin-bottom: 10px;"></div>
+
+            <!-- Species list container -->
+            <div id="dreambook-species" style="display: flex; flex-wrap: wrap; gap: 5px; max-height: 400px; overflow-y: auto;"></div>
+
+            <!-- Grid for selected species details -->
+            <div id="dreambook-grid" style="margin-top: 20px;"></div>
+        </div>
+
+        <div id="ranch" class="tab-section" style="display:none;">
+            <h2>Ranch</h2>
+        </div>
+
+        <div id="quests" class="tab-section" style="display:none;">
+            <h2>Quests</h2>
+        </div>
+
+        <div id="shop" class="tab-section" style="display:none;">
+            <h2>Shop</h2>
+        </div>
+
+        <div id="collection" class="tab-section" style="display:none;">
+            <h2>Collection</h2>
+            <div id="chest-timer" style="color:#ccc; margin-bottom:12px; font-size:0.95em;"></div>
+            <div id="chest-buttons"></div>
+            <div id="chests-container" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap:10px; margin-top:10px;"></div>
+            <div id="chest-result" style="margin-top:20px;"></div>
+            <div id="collectible-groups">
+                <div id="collectible-group-buttons"></div> <!-- Buttons go here -->
+                <div id="collectible-cards"></div>        <!-- Cards go here -->
+            </div>
+        </div>
+
+        <div id="trophy-hall" class="tab-section" style="display:none;">
+            <h2>Trophy Hall</h2>
+        </div>
+
+        <div id="settings" class="tab-section" style="display:none;">
+            <h2>Settings</h2>
+            <h3>Trading</h3>
+                <input type="file" id="import-qr-input" accept="image/*" style="display:none">
+                <button id="import-qr-btn" class="move-btn">Import Dreamling Card</button>
+
+            <div style="margin-top:20px">
+                <h3>Save Files</h3>
+                <button onclick="deleteSave()" class="move-btn" style="background-color:#c33;color:#fff;">Delete Save</button>
+            </div>
+            <div style="margin-top:20px">
+                <button class="move-btn" onclick="exportSave()">Export Save</button>
+                <input type="file" id="importFile" style="display:none" accept=".json" onchange="importSave(this.files[0])">
+                <button class="move-btn" onclick="document.getElementById('importFile').click()">Import Save</button>
+            </div>
+            <div style="margin-top:20px">
+                <h3>Secret Upgrades & Other Stuff</h3>
+                <button id="gnome-home-btn" style="background-color:#4CAF50; color:#fff; padding:6px 12px; border:none; border-radius:5px; cursor:pointer;">
+                    Activate the Gnome Home!
+                </button>
+                <br><button id="stuck-taming-btn" style="margin-top:10px;background-color:#4CAF50; color:#fff; padding:6px 12px; border:none; border-radius:5px; cursor:pointer;">
+                    Reset Taming Lock
+                </button>
+            </div>
+            <div style="margin-top:20px">
+                <h3>Data Export</h3>
+                <button onclick="exportDreamlingsToCSV()" class="move-btn">Export All Dreamlings to CSV</button>
+                <button onclick="exportDreamBookToCSV()" class="move-btn" style="margin-top: 10px;">Export Dream Book to CSV</button>
+            </div>
+            <div style="margin-top:20px">
+                <h3>Discord</h3>
+                <p><a href="https://discord.gg/keXJs3ARcY" style="color: #ffff00" target="_blank" rel="noopener noreferrer">Join the Discord here!</a></p>
+            </div>
+        </div>
+
+        <div id="help" class="tab-section" style="display:none;">
+            <h2>Help</h2>
+            <p>Welcome to Dreamlings Idle, a buggy text-based creature collector that is all about waiting. The majority, but not all, of this game was created
+                with tremendous help from several AIs. For this reason, because the dev is not actually a dev but just someone who has a hoarding problem, it is
+                probably rather buggy. There are also no images in this game, but there are a few emojis. Does that count? No, suppose not.</p>
+            <p>If you clicked away the popups meant to help you, here is what they said for you to read while you wait.</p>
+            <h3>Dreamlings Tab</h3>
+            <p>Here live your current Dreamlings: your active party, your training Dreamlings and your storage. Party Dreamlings give bonuses and gain experience 
+                every second. The Dreamlings you put in training gain twice the experience, but give no bonuses. The ones in your storage don't gain experience 
+                and they don't give bonuses. You start with 500 storage, but you can increase your storage later. Every party member gives you 0.5 experience per 
+                second, so try to keep a full party at all times.</p>
+            <h3>Exporting/Trading</h3>
+            <p>Exporting creates a QR code (or, if that fails, a regular text code), which you can use to trade with other people. There is not much point in trading 
+                with yourself, because beyond a "TRADED" banner and collection purposes, there are no benefits. The codes are valid for 24h after generation, so you 
+                can't just export everything and keep them indefinitely if you run out of storage. You can use the same code once every 24h, but you can use as many 
+                codes as you want. If you'd like to trade, check out the Discord link in the Settings tab and join us!</p>
+            <h3>Wild Areas Tab</h3>
+            <p>You start with the Forest area, where you can find ~50 random Dreamlings out of the 650 base ones. These are different for everyone. You will need 
+                Event Vouchers to temporarily access the Event area, or purchase access from the Token Shop with Quest Tokens. Search for a wild Dreamling, which costs 
+                1 energy, and then click "tame". Taming takes some time, depending on the rarity. You can only tame 1 at a time, so choose carefully. Wild Dreamlings 
+                will disappear after some time (10-15 minutes), so don't spend all your energy at once unless you plan on leaving for a while and letting it regenerate. 
+                Energy regens 1 every 10 minutes and starts off with max 30, but you can increase this.</p>
+            <h3>Special Dreamlings/Stars</h3>
+            <P>Every time you search, you have a 0.5 base chance of encountering a star Dreamling. These are special variants, though really their only benefit is that 
+                they have double the max level of their regular variant. You can raise your base star chance with upgrades and Dreamling bonuses, but it's capped at 
+                5% total.</P>
+            <h3>Event Area</h3>
+            <p>Every month, 30 new species are added that you can collect for that month only. These are limited edition for now, meaning they aren't set to return 
+                afterwards, so get them while you can. If you're aiming to collect all of them, a tip is to collect at least the Common T1's of each and preferably 
+                the Uncommon T1's as well, to make things easier on yourself. With the Dream Book and a lot of levelling and fusions and some luck, you will be able 
+                to work your way up through every Dreamling species.</p>
+            <h3>Fusion Lab</h3>
+            <p>When you have level 25 Dreamlings that have the same rarity and tier, you can fuse them. Upon success you will get a higher tier, a higher rarity or both. 
+                The selected Dreamlings will disappear and the result will appear in your storage, starting over at level 1. Failure to fuse will make the Dreamlings 
+                tired and mean you will have to wait 30 minutes to try again. You are able to get star Dreamlings from regular fusion. Fusing a star and a regular 
+                Dreamling will result in a 50% chance of a star, while fusing two stars will always give another star.</p>
+            <h3>Dream Book</h3>
+            <p>Every single Dreamling you have ever collected appears here. You can buy collected Dreamlings for Dream Points. The price depends on the rarity and the 
+                tier, and events are three times as expensive. This can help you finish a collection, if that's what you want to work on. The base rate for Dream Points 
+                is 1 per second, per party member. You are able to get star Dreamlings from Dream Book purchases.</p>
+            <h3>Upgrades Tab</h3>
+            <p>Buy upgrades with Research Points and Gold. You gain 0.1 Research Point per second from each party member and then 0.1-0.5 Research Points per second from 
+                released Dreamlings, depending on the rarity. Once you have accumulated some Dream Points, you could buy cheap Common T1's from the Dream Book for 100k 
+                each and release them for 0.1 Research Points per second. Gold comes from collectibles, which you get from chests in the Collection tab.</p>
+            <h3>Quests</h3>
+            <p>Every day you get 5 quests, which are repeatable 5 times. Progress doesn't carry over between repeats, so claim them immediately. You get Quest Tokens 
+                from every completed quest and a small bit of gold that is mostly meant to help you get started on the Upgrades rather than provide you with a proper 
+                amount.</p>
+            <h3>Token Shop</h3>
+            <p>Buy consumables with Quest Tokens. The effects are immediately applied, so if for example you buy 6h event access, you get it immediately. The 
+                chests you purchase will be in the Collection tab, same as other chests. You can only have one temporary boost running at a time!</p>
+            <h3>Collection/Chests</h3>
+            <p>There are 5000 collectibles you can collect, each with their own rarity and a gold per second value based on that. You get 1 chest every 10 minutes 
+                to start with, with max 30 at a time, but you can increase this limit in the Upgrades. You can get Event Vouchers and Max Potions from chests at a 
+                0.5% rate with a pity counter set to 200, so make sure to open these when you can.</p>
+            <h3>Trophy Hall/Ascension</h3>
+            <p>Fusing two Legendary T5 Dreamlings will always result in a star Legendary T5. Get it to level 1000 with a Max Potion and then you get the option of 
+                ascending it. Ascension removes the Dreamling from regular gameplay, but adds it to the Trophy Hall and its boosts become permanent, as though you 
+                have it in your party. Normally Legendaries have their boosts capped at level 250, but with ascension this becomes level 333. Not only will you free 
+                up a party slot by ascending a star Legendary T5 Dreamling, you will also get higher boosts from them, which definitely makes it worth it.</p>
+            <h3>Discord</h3>
+            <p><a href="https://discord.gg/keXJs3ARcY" style="color: #ffff00" target="_blank" rel="noopener noreferrer">Join the Discord here!</a></p>
+        </div>
+    </div>
+
+  <script src="main.js"></script>
+<!--客服 开始-->
+<script src="//g8hh.github.io/static/js/jquery.min.js"></script>
+<link rel="stylesheet" href="//g8hh.github.io/static/css/kf.css" type="text/css" media="screen" charset="utf-8">
+<script src="//g8hh.github.io/static/js/kf.js"></script>
+<!-- 客服 结束 -->
+<!--站长统计--> 
+<div style="display: none">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?028b1b5f659ed138230f4cafd7ad0dfc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    </div>
+</body>
+</html>
